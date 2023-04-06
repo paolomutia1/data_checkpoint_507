@@ -18,11 +18,11 @@ This Flask-based web application allows users to search for books, movies, and r
 
 1. Clone the repository:
 
-git clone https://github.com/yourusername/your-repo-name.git
+git clone https://github.com/paolomutia1/data_checkpoint_507.git
 
 2. Change the working directory to the project directory:
 
-cd your-repo-name
+cd data_checkpoint_507
 
 3. Create a virtual environment:
 
