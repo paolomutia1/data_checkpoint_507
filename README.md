@@ -39,9 +39,9 @@ pip install -r requirements.txt
 
 6. Create a `.env` file in the project directory and add your API keys:
 
-GOOGLE_BOOKS_API_KEY=your_google_books_api_key
-OMDB_API_KEY=your_omdb_api_key
-NEWS_API_KEY=your_news_api_key
+- GOOGLE_BOOKS_API_KEY=your_google_books_api_key
+- OMDB_API_KEY=your_omdb_api_key
+- NEWS_API_KEY=your_news_api_key
 
 Replace `your_google_books_api_key`, `your_omdb_api_key`, and `your_news_api_key` with your actual API keys. To obtain the API keys, follow these instructions:
 
