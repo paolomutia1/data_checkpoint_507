@@ -46,7 +46,9 @@ NEWS_API_KEY=your_news_api_key
 Replace `your_google_books_api_key`, `your_omdb_api_key`, and `your_news_api_key` with your actual API keys. To obtain the API keys, follow these instructions:
 
 - Google Books API: [Getting a Google Books API key](https://developers.google.com/books/docs/v1/using#APIKey)
+
 - OMDB API: [OMDb API - The Open Movie Database](https://www.omdbapi.com/apikey.aspx)
+
 - News API: [News API - Get API Key](https://newsapi.org/register)
 
 7. Run the Flask application:
