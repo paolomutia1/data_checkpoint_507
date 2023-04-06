@@ -1,0 +1,187 @@
+body {
+    background-image: url('https://source.unsplash.com/random/1920x1080');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+h1 {
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.btn-primary {
+    background-color: #1a73e8;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #1976d2;
+}
+
+.index-page {
+    background-image: url('https://source.unsplash.com/random/1920x1080');
+    background-size: cover;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Customizing the scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #1a73e8;
+    border-radius: 4px;
+}
+
+/* Customizing the scrollbar for Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1a73e8 rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode .container {
+    background-color: rgba(30, 30, 30, 0.85);
+}
+
+body.dark-mode::-webkit-scrollbar {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+}
+
+body.dark-mode * {
+    scrollbar-color: #ffffff rgba(255, 255, 255, 0.1);
+}
+
+.content-wrapper {
+    position: relative;
+}
+
+#theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+
+/* Add a transition to buttons when hovering */
+.btn {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Change the scale and add a box-shadow when hovering over card headers */
+.card-header {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-header:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Change the background color of list items when hovering */
+ul li {
+    transition: background-color 0.3s;
+}
+
+ul li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Add a transition to the theme-toggle button */
+#theme-toggle {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Change the theme-toggle button's appearance when hovering */
+#theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+}
+
+body.dark-mode {
+    color: #f0f0f0;
+}
+
+body.dark-mode .container {
+    background-color: rgba(40, 44, 52, 0.95);
+}
+
+body.dark-mode ul li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .card {
+    background-color: rgba(50, 54, 62, 0.95);
+    color: #f0f0f0;
+}
+
+body.dark-mode .card a {
+    color: #1a73e8;
+}
+
+body.dark-mode .card a:hover {
+    color: #1976d2;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #1a73e8;
+    border: none;
+    color: #ffffff;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #1976d2;
+}
+
+/* Add transition effect to buttons and links */
+.btn, .card-link {
+    transition: all 0.3s ease;
+}
+
+/* Add hover effect to buttons */
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* Add hover effect to card links */
+.card-link:hover {
+    text-decoration: none;
+    color: #007bff;
+}
+
+/* Color scheme of accordion in results page */
+.dark-mode .card, .dark-mode .card-header, .dark-mode .card-body {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}
+
+.dark-mode .card-link, .dark-mode .card-link:hover {
+    color: #3498db;
+}
+
+.dark-mode .card-header {
+    border-color: #34495e;
+}
+

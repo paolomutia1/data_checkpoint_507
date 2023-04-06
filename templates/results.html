@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="content-wrapper">
+        <button id="theme-toggle" type="button" class="btn btn-secondary float-right mb-3">Toggle Dark Mode</button>
+        <h1>Search Results</h1>
+        <button onclick="window.location.href='/'" class="btn btn-primary mb-3">Start New Search</button>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseBooks">
+                        Books
+                    </a>
+                </div>
+                <div id="collapseBooks" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            {% for book in book_list %}
+                            <li><a href="{{ book.url }}" target="_blank">{{ book.info() }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseMovies">
+                        Movies
+                    </a>
+                </div>
+                <div id="collapseMovies" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            {% if movie_data %}
+                            <h3>Movies</h3>
+                                <ul>
+                                    {% for movie, description in zipped_movie_data %}
+                                        <li>
+                                            <h3>{{ movie.Title }}</h3>
+                                            <p>{{ description }}</p>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseArticles">
+                        Articles
+                    </a>
+                </div>
+                <div id="collapseArticles" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            {% for article in news_articles %}
+                            <li>
+                                <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+                                <br>Source: {{ article.source }} | Published at: {{ article.publishedAt[:10] }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseGenres">
+                        Most Common Genres
+                    </a>
+                </div>
+                <div id="collapseGenres" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        {% for genre in most_common_genres %}
+                            <h3>{{ genre }}</h3>
+                            <ul>
+                                {% for book in genre_graph[genre] %}
+                                <li>{{ book.info() }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseRated">
+                        Highest Rated Books
+                    </a>
+                </div>
+                <div id="collapseRated" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            {% for book in highest_rated_books %}
+                            <li><a href="{{ book.url }}" target="_blank">{{ book.info() }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navigation-buttons mt-3">
+            {% if start_index > 0 %}
+            <form action="{{ url_for('search') }}" method="POST" class="d-inline">
+                <input type="hidden" name="search_term" value="{{ user_input }}">
+                <input type="hidden" name="language" value="{{ lang_filter }}">
+                <input type="hidden" name="sort" value="{{ order_by }}">
+                <input type="hidden" name="start_index" value="{{ start_index - 10 }}">
+                <button type="submit" class="btn btn-primary">Previous</button>
+            </form>
+            {% endif %}
+            {% if total_items > start_index + 10 %}
+            <form action="{{ url_for('search') }}" method="POST" class="d-inline">
+                <input type="hidden" name="search_term" value="{{ user_input }}">
+                <input type="hidden" name="language" value="{{ lang_filter }}">
+                <input type="hidden" name="sort" value="{{ order_by }}">
+                <input type="hidden" name="start_index" value="{{ start_index + 10 }}">
+                <input type="hidden" name="current_page" value="{{ current_page + 1 }}">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    });
+
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+</script>
+</body>
+</html>

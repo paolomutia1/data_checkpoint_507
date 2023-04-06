@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/custom.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="content-wrapper">
+        <button id="theme-toggle" type="button" class="btn btn-secondary float-right mb-3">Toggle Dark Mode</button>
+        <h1>Book Search</h1>
+        <p id="last-search"></p>
+        <form action="/search" method="post">
+            <div class="form-group">
+                <label for="search_term">Search term:</label>
+                <input type="text" name="search_term" id="search_term" onkeyup="saveSearch()" required class="form-control">
+            </div>
+            <button id="voice-input-btn" type="button" class="btn btn-secondary mb-3">Voice Input</button>
+            <div class="form-group">
+                <label for="language">Language:</label>
+                <select name="language" id="language" class="form-control">
+                    <option value="">Any</option>
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="it">Italian</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="ja">Japanese</option>
+                    <option value="ko">Korean</option>
+                    <!-- Add more languages here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="sort">Sort by:</label>
+                <select name="sort" id="sort" class="form-control">
+                    <option value="">Relevance</option>
+                    <option value="newest">Newest</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" name="author" id="author" class="form-control" placeholder="Author">
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <input type="text" name="genre" id="genre" class="form-control" placeholder="Genre">
+            </div>
+            <div class="form-group">
+                <label for="min_rating">Minimum Rating:</label>
+                <input type="number" name="min_rating" id="min_rating" class="form-control" placeholder="Minimum rating" min="0" max="5" step="0.1">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>        
+    </div>
+</div>
+<script>
+    function saveSearch() {
+        let searchTerm = document.getElementById("search_term").value;
+        localStorage.setItem("lastSearch", searchTerm);
+    }
+
+    function saveVoiceSearch(searchTerm) {
+        localStorage.setItem("lastSearch", searchTerm);
+    }
+
+    function displayLastSearch() {
+        let lastSearch = localStorage.getItem("lastSearch");
+        if (lastSearch) {
+            document.getElementById("last-search").innerHTML = "Your last search was: <strong>" + lastSearch + "</strong>";
+        }
+    }
+
+    displayLastSearch();
+       
+    const voiceInputBtn = document.getElementById('voice-input-btn');
+
+    // Check if the browser supports the Web Speech API
+    if ('webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-US'; // Set the language you want to support
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = () => {
+            voiceInputBtn.textContent = 'Listening...';
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            // You can use 'transcript' as the search term
+            console.log('Voice input:', transcript);
+            document.getElementById('search_term').value = transcript;
+            saveVoiceSearch(transcript); // Save voice input
+            voiceInputBtn.textContent = 'Voice Input';
+            alert('Voice input received: ' + transcript);
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Error during speech recognition:', event.error);
+            voiceInputBtn.textContent = 'Voice Input';
+        };
+
+        recognition.onend = () => {
+            voiceInputBtn.textContent = 'Voice Input';
+        };
+
+        voiceInputBtn.addEventListener('click', () => {
+            recognition.start();
+        });
+    } else {
+        voiceInputBtn.disabled = true;
+        voiceInputBtn.textContent = 'Voice Input (not supported)';
+    }
+
+    // Dark mode
+    const themeToggle = document.getElementById('theme-toggle');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    });
+
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    setBackgroundImage();
+
+</script>
+</body>
+</html>
+
